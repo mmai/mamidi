@@ -1,0 +1,33 @@
+fos_user:
+  #db_driver: orm
+  firewall_name: main
+  user_class: Mamidi\UserBundle\Entity\User
+  service:
+    user_manager: pugx_user_manager
+pugx_multi_user:
+  users:
+    user_guest:
+      entity:
+        class: Mamidi\UserBundle\Entity\GuestUser
+      registration:
+        form:
+          type: Mamidi\UserBundle\Form\Type\GuestRegistrationFormType
+        template: MamidiUserBundle:Registration:user_guest.form.html.twig
+      profile:
+        form:
+          type: Mamidi\UserBundle\Form\Type\GuestProfileFormType
+    user_host:
+      entity:
+        class: Mamidi\UserBundle\Entity\HostUser
+#        factory:
+      registration:
+        form:
+          type: Mamidi\UserBundle\Form\Type\HostRegistrationFormType
+          name: fos_user_registration_form
+          validation_groups:  [Registration, Default]
+        template: MamidiUserBundle:Registration:user_host.form.html.twig
+      profile:
+        form:
+          type: Mamidi\UserBundle\Form\Type\HostProfileFormType
+          name: fos_user_profile_form
+          validation_groups:  [Profile, Default]

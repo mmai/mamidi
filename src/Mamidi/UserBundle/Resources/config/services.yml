@@ -1,4 +1,8 @@
 services:
+  mamidi_user.guest_registration.form.type:
+    class: Mamidi\UserBundle\Form\Type\GuestRegistrationFormType
+    tags:
+      - { name: form.type, alias: mamidi_guest_registration }
 #    mamidi_user.example:
 #        class: Mamidi\UserBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
