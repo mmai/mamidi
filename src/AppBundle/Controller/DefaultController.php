@@ -16,10 +16,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/about/{you}", name="about")
+     * @Route("/about/", name="about")
      */
-    public function aboutAction($you)
+    public function aboutAction()
     {
-        return $this->render('default/about.html.twig', array("you" => $you));
+        return $this->render('default/about.html.twig');
     }
 }

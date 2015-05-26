@@ -11,6 +11,7 @@ namespace Mamidi\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use PUGX\MultiUserBundle\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -40,6 +41,17 @@ class GuestUser extends User
      * )
      */
     protected $phone;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Mamidi\ClassifiedBundle\Entity\Reservation", mappedBy="guest")
+     */
+    protected $reservations;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->reservations = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -72,5 +84,39 @@ class GuestUser extends User
     public function getPhone()
     {
         return $this->phone;
+    }
+    
+
+    /**
+     * Add reservations
+     *
+     * @param \Mamidi\ClassifiedBundle\Entity\Reservation $reservations
+     * @return GuestUser
+     */
+    public function addReservation(\Mamidi\ClassifiedBundle\Entity\Reservation $reservations)
+    {
+        $this->reservations[] = $reservations;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservations
+     *
+     * @param \Mamidi\ClassifiedBundle\Entity\Reservation $reservations
+     */
+    public function removeReservation(\Mamidi\ClassifiedBundle\Entity\Reservation $reservations)
+    {
+        $this->reservations->removeElement($reservations);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }

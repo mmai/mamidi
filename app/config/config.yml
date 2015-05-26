@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: @MamidiUserBundle/Resources/config/config.yml }
+    - { resource: @MamidiClassifiedBundle/Resources/config/admin.yml }
 
 framework:
     #esi:             ~
@@ -96,3 +97,9 @@ braincrafted_bootstrap:
         bootstrap_template: BraincraftedBootstrapBundle:Bootstrap:bootstrap.less.twig
     icon_prefix: glyphicon
     fontawesome_dir: %kernel.root_dir%/../vendor/fortawesome/font-awesome
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        # Enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts:   [admin]

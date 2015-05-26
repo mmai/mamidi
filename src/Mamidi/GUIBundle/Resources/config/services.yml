@@ -1,0 +1,4 @@
+services:
+#    mamidi_gui.example:
+#        class: Mamidi\GUIBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
