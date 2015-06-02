@@ -10,6 +10,13 @@ mamidi_user:
     resource: "@MamidiUserBundle/Resources/config/routing.yml"
     prefix:   /
 
+host_meals:
+    path:     /{host}/meals
+    defaults: { _controller: MamidiClassifiedBundle:Meal:index }
+
+mamidi:
+    resource: '@MamidiClassifiedBundle/Controller/'
+    type:      annotation
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

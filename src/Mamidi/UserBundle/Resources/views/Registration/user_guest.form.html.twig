@@ -2,11 +2,7 @@
 
 {% block fos_user_content %}
     {% trans_default_domain 'FOSUserBundle' %}
+    <h1>Inscription en tant que convive</h1>
 
-    <form action="{{ path('guest_registration') }}" {{ form_enctype(form) }} method="POST">
-        {{ form_widget(form) }}
-        <div>
-            <input type="submit" value="{{ 'registration.submit'|trans }}" />
-        </div>
-    </form>
+    {{ form(form, {"style": "horizontal"}) }}
 {% endblock fos_user_content %}

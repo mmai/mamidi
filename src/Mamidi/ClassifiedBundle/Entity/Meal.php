@@ -4,6 +4,7 @@ namespace Mamidi\ClassifiedBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Meal
@@ -23,6 +24,7 @@ class Meal
     private $id;
 
     /**
+     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity="Mamidi\UserBundle\Entity\HostUser", inversedBy="meals")
      * @ORM\JoinColumn(name="host_id", referencedColumnName="id")
      */

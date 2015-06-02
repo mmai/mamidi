@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Meal</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Starter</th>
+                <td>{{ entity.starter }}</td>
+            </tr>
+            <tr>
+                <th>Maincourse</th>
+                <td>{{ entity.maincourse }}</td>
+            </tr>
+            <tr>
+                <th>Dessert</th>
+                <td>{{ entity.dessert }}</td>
+            </tr>
+            <tr>
+                <th>Numberofguests</th>
+                <td>{{ entity.numberOfGuests }}</td>
+            </tr>
+            <tr>
+                <th>Time</th>
+                <td>{{ entity.time|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('meal') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('meal_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

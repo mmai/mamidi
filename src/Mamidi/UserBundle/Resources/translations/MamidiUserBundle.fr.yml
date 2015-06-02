@@ -1,4 +1,11 @@
 # Form field labels
 form:
-    phone: "Téléphone :"
+    phone: "Téléphone"
+    address: "Adresse"
+    zip: "Code postal"
+    city: "Ville"
+    save: "Enregistrer"
+registration:
+    host: "Inscription en tant qu'hôte"
+    guest: "Inscription en tant que convive"
 

@@ -6,6 +6,14 @@ guest_registration:
     pattern:  /register/guest
     defaults: { _controller: MamidiUserBundle:GuestRegistration:register }
 
+mamidi_host_homepage:
+    path:     /host/{name}
+    defaults: { _controller: MamidiUserBundle:Default:index }
+
+mamidi_guest_homepage:
+    path:     /guest/{name}
+    defaults: { _controller: MamidiUserBundle:Default:index }
+
 mamidi_user_homepage:
     path:     /hello/{name}
     defaults: { _controller: MamidiUserBundle:Default:index }

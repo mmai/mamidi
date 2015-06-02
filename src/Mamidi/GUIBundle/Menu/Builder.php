@@ -15,6 +15,9 @@ class Builder extends ContainerAware
 {
     public function mainMenu(FactoryInterface $factory, array $options)
     {
+
+        $securityContext = $this->container->get('security.context');
+
         $menu = $factory->createItem('root');
 
         $menu->addChild('Home', array('route' => 'homepage'));
@@ -31,11 +34,47 @@ class Builder extends ContainerAware
         ));
         */
 
+        if ($securityContext->isGranted('ROLE_HOST')) {
+            $user = $securityContext->getToken()->getUser();
+            $menu->addChild('My meals', array(
+                'route' => 'host_meals',
+                'routeParameters' => array('host' => $user->getUserName())
+            ));
+            $menu->addChild('Reservations', array(
+                'route' => 'host_reservations'
+            ));
+        }
+
         // create another menu item
         $menu->addChild('About', array('route' => 'about'));
         // you can also add sub level's to your menu's as follows
         //$menu['About Me']->addChild('Edit profile', array('route' => 'edit_profile'));
 
+
+        return $menu;
+    }
+
+    public function loginMenu(FactoryInterface $factory, array $options)
+    {
+        $securityContext = $this->container->get('security.context');
+        $menu = $factory->createItem('root');
+
+        $translator = $this->container->get('translator');
+        if ($securityContext->isGranted("IS_AUTHENTICATED_REMEMBERED")){
+            $user = $securityContext->getToken()->getUser();
+            //$message =  $translator->trans('layout.logged_in_as', array('%username%' => $user->getUserName())); //FosUserBundle
+            $message =  $translator->trans('Connecté en tant que %username%', array('%username%' => $user->getUserName()));
+            $menu->addChild($message);
+
+            //$logout_message = $translator->trans('layout.logout'); //FosUserBundle
+            $logout_message = $translator->trans('Déconnexion'); //FosUserBundle
+            $menu[$message]->addChild($logout_message, array('route' => "fos_user_security_logout"));
+        }
+        else {
+            //$login_message = $translator->trans('layout.login'); //FosUserBundle
+            $login_message = $translator->trans('Connexion');
+            $menu->addChild($login_message, array('route' => "fos_user_security_login"));
+        }
 
         return $menu;
     }

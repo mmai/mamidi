@@ -1,3 +1,11 @@
-mamidi_classified_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: MamidiClassifiedBundle:Default:index }
+host_reservations:
+    path:     /reservations/
+    defaults: { _controller: MamidiClassifiedBundle:Reservation:index }
+
+accept:
+    path:     /accept
+    defaults: { _controller: MamidiClassifiedBundle:Reservation:accept }
+
+reject:
+    path:     /reject
+    defaults: { _controller: MamidiClassifiedBundle:Reservation:reject }
