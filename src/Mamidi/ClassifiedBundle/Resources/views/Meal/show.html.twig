@@ -1,20 +1,20 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Meal</h1>
+    <h1>Menu</h1>
 
-    <table class="record_properties">
+    <table class="record_properties table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <th>Date</th>
+                <td>{{ entity.time|date('l d F H:i') }}</td>
             </tr>
             <tr>
-                <th>Starter</th>
+                <th>Entrée</th>
                 <td>{{ entity.starter }}</td>
             </tr>
             <tr>
-                <th>Maincourse</th>
+                <th>Plat</th>
                 <td>{{ entity.maincourse }}</td>
             </tr>
             <tr>
@@ -22,27 +22,26 @@
                 <td>{{ entity.dessert }}</td>
             </tr>
             <tr>
-                <th>Numberofguests</th>
+                <th>Nombre de convives</th>
                 <td>{{ entity.numberOfGuests }}</td>
-            </tr>
-            <tr>
-                <th>Time</th>
-                <td>{{ entity.time|date('Y-m-d H:i:s') }}</td>
             </tr>
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('meal') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('meal_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+
+    {% if is_granted('ROLE_GUEST') %}
+        {% if (entity.isBookedBy(app.user)) %}
+            {% render(controller('MamidiClassifiedBundle:Reservation:cancel_form', { 'id' : entity.id })) %}
+        {% else %}
+            {% render(controller('MamidiClassifiedBundle:Meal:book_form', { 'id' : entity.id })) %}
+        {% endif %}
+    {% endif %}
+
+    {% if is_current_host %}
+        <a href="{{ path('meal_edit', { 'id': entity.id }) }}">modifier</a>
+        {{ form(delete_form) }}
+    {% endif %}
+
+    <a href="{{ path('meal') }}">Retour</a>
+
 {% endblock %}

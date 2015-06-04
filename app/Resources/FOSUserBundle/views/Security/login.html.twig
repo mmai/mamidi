@@ -7,7 +7,9 @@
 {% if error %}
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
-
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    Vous êtes déjà connecté
+{% else %}
 <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
     <div id="form">
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -36,9 +38,7 @@
     </div>
 </form>
 
-<ul>
-    <li><a href="{{ path('guest_registration') }}">{{ 'registration.guest'|trans({}, 'MamidiUserBundle') }}</a></li>
-    <li><a href="{{ path('host_registration') }}">{{ 'registration.host'|trans({}, 'MamidiUserBundle') }}</a></li>
-</ul>
-
+<a href="{{ path('guest_registration') }}" class="btn btn-default">{{ 'registration.guest'|trans({}, 'MamidiUserBundle') }}</a>
+<a href="{{ path('host_registration') }}" class="btn btn-default">{{ 'registration.host'|trans({}, 'MamidiUserBundle') }}</a>
+{% endif %}
 {% endblock fos_user_content %}

@@ -17,3 +17,7 @@ mamidi_guest_homepage:
 mamidi_user_homepage:
     path:     /hello/{name}
     defaults: { _controller: MamidiUserBundle:Default:index }
+
+host_meals:
+    path:     /{host}/meals
+    defaults: { _controller: MamidiUserBundle:Host:meals }

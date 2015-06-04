@@ -20,7 +20,7 @@ class Builder extends ContainerAware
 
         $menu = $factory->createItem('root');
 
-        $menu->addChild('Home', array('route' => 'homepage'));
+        $menu->addChild('Accueil', array('route' => 'homepage'));
 
         // access services from the container!
         $em = $this->container->get('doctrine')->getManager();
@@ -36,20 +36,22 @@ class Builder extends ContainerAware
 
         if ($securityContext->isGranted('ROLE_HOST')) {
             $user = $securityContext->getToken()->getUser();
-            $menu->addChild('My meals', array(
+            $menu->addChild('Mes repas', array(
                 'route' => 'host_meals',
                 'routeParameters' => array('host' => $user->getUserName())
             ));
             $menu->addChild('Reservations', array(
                 'route' => 'host_reservations'
             ));
+        } else if ($securityContext->isGranted('ROLE_GUEST')) {
+            $user = $securityContext->getToken()->getUser();
+            $menu->addChild('Trouver un repas', array(
+                'route' => 'meal'
+            ));
+            $menu->addChild('Mes réservations', array(
+                'route' => 'guest_reservations'
+            ));
         }
-
-        // create another menu item
-        $menu->addChild('About', array('route' => 'about'));
-        // you can also add sub level's to your menu's as follows
-        //$menu['About Me']->addChild('Edit profile', array('route' => 'edit_profile'));
-
 
         return $menu;
     }

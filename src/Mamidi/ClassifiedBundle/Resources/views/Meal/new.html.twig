@@ -1,15 +1,11 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Meal creation</h1>
+    <h1>Nouveau repas</h1>
 
     {{ form(form) }}
 
-        <ul class="record_actions">
-    <li>
         <a href="{{ path('meal') }}">
-            Back to the list
+            Retour à la liste
         </a>
-    </li>
-</ul>
 {% endblock %}

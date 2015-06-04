@@ -15,11 +15,17 @@ class MealType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('time')
-            ->add('starter')
-            ->add('maincourse')
-            ->add('dessert')
-            ->add('numberOfGuests')
+            ->add('time', 'sonata_type_datetime_picker', array(
+                'label' => "Date",
+                'dp_side_by_side'       => true,
+                'dp_use_current'        => false,
+                'dp_use_seconds'        => false,
+                'format' => "YYYY-MM-DD H:m"
+            ))
+            ->add('starter', 'text', array('label' => 'Entrée'))
+            ->add('maincourse', 'text', array('label' => 'Plat'))
+            ->add('dessert', 'text', array('label' => 'Dessert'))
+            ->add('numberOfGuests', 'integer', array('label' => "Nombre de convives"))
         ;
     }
     

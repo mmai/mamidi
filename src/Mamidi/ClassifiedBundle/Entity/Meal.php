@@ -258,4 +258,17 @@ class Meal
     {
         return $this->reservations;
     }
+
+    /**
+     * Check if a meal is booked by a guest
+     *
+     * @param \Mamidi\UserBundle\Entity\GuestUser $guest
+     * @return Boolean
+     */
+    public function isBookedBy($guest)
+    {
+        return $this->reservations->exists(function($key, $reservation) use($guest) {
+            return $reservation->getGuest() == $guest;
+        });
+    }
 }

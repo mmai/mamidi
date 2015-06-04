@@ -2,6 +2,10 @@ host_reservations:
     path:     /reservations/
     defaults: { _controller: MamidiClassifiedBundle:Reservation:index }
 
+guest_reservations:
+    path:     /reservations/
+    defaults: { _controller: MamidiClassifiedBundle:Reservation:index }
+
 accept:
     path:     /accept
     defaults: { _controller: MamidiClassifiedBundle:Reservation:accept }
@@ -9,3 +13,39 @@ accept:
 reject:
     path:     /reject
     defaults: { _controller: MamidiClassifiedBundle:Reservation:reject }
+
+meal:
+    path: /meal/
+    defaults: { _controller: MamidiClassifiedBundle:Meal:index }
+    requirements:
+        _method: GET
+meal_create:
+    path: /meal/
+    defaults: { _controller: MamidiClassifiedBundle:Meal:create }
+    requirements:
+        _method: POST
+meal_new:
+    path: /meal/new
+    defaults: { _controller: MamidiClassifiedBundle:Meal:new }
+    requirements:
+        _method: GET
+meal_show:
+    path: /meal/{id}
+    defaults: { _controller: MamidiClassifiedBundle:Meal:show }
+    requirements:
+        _method: GET
+meal_edit:
+    path: /meal/{id}/edit
+    defaults: { _controller: MamidiClassifiedBundle:Meal:edit }
+    requirements:
+        _method: GET
+meal_update:
+    path: /meal/{id}
+    defaults: { _controller: MamidiClassifiedBundle:Meal:update }
+    requirements:
+        _method: PUT
+meal_delete:
+    path: /meal/{id}
+    defaults: { _controller: MamidiClassifiedBundle:Meal:delete }
+    requirements:
+        _method: DELETE

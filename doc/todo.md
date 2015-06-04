@@ -1,11 +1,4 @@
-- menu selon profil
-- host : list annonces 
-- host : création annonce 
-- host : edit / delete annonce 
+- guest : list reservations
 - host : show annonce reservations
 - host : validate reservations
-- guest : list annonces
-- guest : add reservation
-- guest : list reservations
-- base layout
 - pages profil

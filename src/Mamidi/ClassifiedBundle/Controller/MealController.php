@@ -7,8 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 use Mamidi\ClassifiedBundle\Entity\Meal;
 use Mamidi\ClassifiedBundle\Form\MealType;
+use Mamidi\ClassifiedBundle\Entity\Reservation;
+use Mamidi\UserBundle\Entity\GuestUser;
 
 /**
  * Meal controller.
@@ -21,7 +25,6 @@ class MealController extends Controller
     /**
      * Lists all Meal entities.
      *
-     * @Route("/", name="meal")
      * @Method("GET")
      * @Template()
      */
@@ -30,15 +33,16 @@ class MealController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MamidiClassifiedBundle:Meal')->findAll();
+        $current_user = $this->container->get('security.context')->getToken()->getUser();
 
         return array(
             'entities' => $entities,
+            'guest' => $current_user
         );
     }
     /**
      * Creates a new Meal entity.
      *
-     * @Route("/", name="meal_create")
      * @Method("POST")
      * @Template("MamidiClassifiedBundle:Meal:new.html.twig")
      */
@@ -86,7 +90,6 @@ class MealController extends Controller
     /**
      * Displays a form to create a new Meal entity.
      *
-     * @Route("/new", name="meal_new")
      * @Method("GET")
      * @Template()
      */
@@ -104,24 +107,28 @@ class MealController extends Controller
     /**
      * Finds and displays a Meal entity.
      *
-     * @Route("/{id}", name="meal_show")
      * @Method("GET")
      * @Template()
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('MamidiClassifiedBundle:Meal')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Meal entity.');
+        }
+
+        $isCurrentHost = false;
+        $current_user = $this->container->get('security.context')->getToken()->getUser();
+        if ($current_user != "anon."){
+            $isCurrentHost =  ($current_user->getId() == $entity->getHost()->getId());
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
+            'is_current_host' => $isCurrentHost,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -129,7 +136,6 @@ class MealController extends Controller
     /**
      * Displays a form to edit an existing Meal entity.
      *
-     * @Route("/{id}/edit", name="meal_edit")
      * @Method("GET")
      * @Template()
      */
@@ -174,7 +180,6 @@ class MealController extends Controller
     /**
      * Edits an existing Meal entity.
      *
-     * @Route("/{id}", name="meal_update")
      * @Method("PUT")
      * @Template("MamidiClassifiedBundle:Meal:edit.html.twig")
      */
@@ -207,7 +212,6 @@ class MealController extends Controller
     /**
      * Deletes a Meal entity.
      *
-     * @Route("/{id}", name="meal_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -243,6 +247,59 @@ class MealController extends Controller
             ->setAction($this->generateUrl('meal_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
+            ->getForm()
+        ;
+    }
+
+    /**
+     * Create a Reservation for this meal
+     *
+     * @Route("/meal/{id}/book", name="meal_book")
+     * @Method("POST")
+     * @Security("has_role('ROLE_GUEST')")
+     *
+     */
+    public function bookAction(Request $request, Meal $meal)
+    {
+        $form = $this->createBookForm($meal);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $reservation = new Reservation();
+            $reservation->setGuest($this->getUser());
+            $reservation->setMeal($meal);
+            $reservation->setDate(new \DateTime("now"));
+            $em->persist($reservation);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('meal');
+    }
+
+    /**
+     * @Route("/meal/{id}/book_form", name="meal_book_form")
+     * @Method("POST")
+     *
+     */
+    public function book_formAction(Meal $id)
+    {
+        $bookForm = $this->createBookForm($id);
+        return $this->render("@MamidiClassified/Meal/book_form.html.twig", array("book_form" => $bookForm->createView()));
+    }
+
+    /**
+     * Creates a form to add a Reservation for a Meal
+     *
+     * @param Meal $meal The meal object
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createBookForm(Meal $meal)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('meal_book', array('id' => $meal->getId())))
+            ->setMethod('POST')
             ->getForm()
         ;
     }
