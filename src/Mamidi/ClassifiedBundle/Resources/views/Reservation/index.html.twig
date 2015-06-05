@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Réservations</h1>
+    <h2>Réservations</h2>
 
     <table class="records_list table">
         <thead>
@@ -12,6 +12,7 @@
             <th>Plat</th>
             <th>Dessert</th>
             <th>Nombre de convives</th>
+            <th>Statut</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -25,6 +26,7 @@
                 <td>{{ entity.maincourse }}</td>
                 <td>{{ entity.dessert }}</td>
                 <td>{{ entity.numberOfGuests }}</td>
+                <td>{{ reservation.displayStatus }}</td>
                 <td>
                     <a href="{{ path('meal_show', { 'id': entity.id }) }}">voir</a>
                     {% if is_granted('ROLE_GUEST') %}

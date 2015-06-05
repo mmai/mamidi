@@ -8,11 +8,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 use Mamidi\ClassifiedBundle\Entity\Meal;
 use Mamidi\ClassifiedBundle\Form\MealType;
 use Mamidi\ClassifiedBundle\Entity\Reservation;
-use Mamidi\UserBundle\Entity\GuestUser;
 
 /**
  * Meal controller.
@@ -272,6 +272,12 @@ class MealController extends Controller
             $reservation->setDate(new \DateTime("now"));
             $em->persist($reservation);
             $em->flush();
+
+            $session = new Session();
+            $session->getFlashBag()->add(
+                'success',
+                'La place a été réservée'
+            );
         }
 
         return $this->redirectToRoute('meal');

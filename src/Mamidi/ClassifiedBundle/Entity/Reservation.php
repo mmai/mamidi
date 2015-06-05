@@ -3,15 +3,24 @@
 namespace Mamidi\ClassifiedBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use PUGX\MultiUserBundle\Validator\Constraints\UniqueEntity;
 
 /**
  * Reservation
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity(fields={"meal", "guest"})
  */
 class Reservation
 {
+    private $statusList = Array(
+        "PENDING" => "En attente",
+        "ACCEPTED" => "Confirmée",
+        "REJECTED" => "Rejetée"
+    );
+
     /**
      * @var integer
      *
@@ -41,11 +50,11 @@ class Reservation
     private $date;
 
     /**
-     * @var boolean
+     * @Assert\Choice(choices = {"PENDING", "ACCEPTED", "REJECTED"})
      *
-     * @ORM\Column(name="validated", type="boolean")
+     * @ORM\Column(name="status", type="text")
      */
-    private $validated;
+    private $status = "PENDING";
 
 
     /**
@@ -84,12 +93,12 @@ class Reservation
     /**
      * Set status
      *
-     * @param boolean $status
+     * @param text $status
      * @return Reservation
      */
-    public function setValidated($validated)
+    public function setStatus($status)
     {
-        $this->status = $validated;
+        $this->status = $status;
 
         return $this;
     }
@@ -97,11 +106,15 @@ class Reservation
     /**
      * Get status
      *
-     * @return boolean 
+     * @return string
      */
-    public function getValidated()
+    public function getStatus()
     {
-        return $this->validated;
+        return $this->status;
+    }
+
+    public function displayStatus(){
+        return $this->statusList[$this->status];
     }
 
     /**

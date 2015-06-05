@@ -4,6 +4,7 @@ namespace Mamidi\ClassifiedBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -257,6 +258,13 @@ class Meal
     public function getReservations()
     {
         return $this->reservations;
+    }
+
+    public function getAvailableSeats(){
+        $criteria = Criteria::create()->where(Criteria::expr()->eq("status", "ACCEPTED"));
+        $confirmedReservations = $this->getReservations()->matching($criteria);
+
+        return $this->getNumberOfGuests() - $confirmedReservations->count();
     }
 
     /**

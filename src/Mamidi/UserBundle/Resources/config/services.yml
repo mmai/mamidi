@@ -3,6 +3,11 @@ services:
     class: Mamidi\UserBundle\Form\Type\GuestRegistrationFormType
     tags:
       - { name: form.type, alias: mamidi_guest_registration }
+  redirect_register_user.registration.completed:
+          class: Mamidi\UserBundle\EventListener\RegistrationConfirmListener
+          arguments: [@router]
+          tags:
+              - { name: kernel.event_subscriber }
 #    mamidi_user.example:
 #        class: Mamidi\UserBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
