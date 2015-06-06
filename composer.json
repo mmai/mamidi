@@ -43,7 +43,9 @@
         "sonata-project/admin-bundle": "^2.3",
         "sonata-project/doctrine-orm-admin-bundle": "^2.3",
         "ext-pdo": "*",
-        "ext-pdo_pgsql": "*"
+        "ext-pdo_pgsql": "*",
+        "ext-intl": "*",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
