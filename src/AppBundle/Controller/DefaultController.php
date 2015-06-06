@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
@@ -12,9 +13,17 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $conn = $this->getDoctrine()->getConnection();
-        error_log(print_r($conn->getParams(), true));
-        return $this->render('default/index.html.twig');
+        $security_ctx = $this->container->get('security.context');
+        $router = $this->container->get('router');
+        if ($security_ctx->isGranted('ROLE_GUEST')){
+            return new RedirectResponse($router->generate('meal', array()));
+        } else if ($security_ctx->isGranted('ROLE_HOST')){
+            return new RedirectResponse($router->generate('host_meals', array('host' => $security_ctx->getToken()->getUser())));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('MamidiClassifiedBundle:Meal')->findAll();
+        return $this->render('default/index.html.twig', array('entities' => $entities));
     }
 
     /**

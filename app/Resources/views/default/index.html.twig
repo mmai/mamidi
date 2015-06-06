@@ -1,5 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block body -%}
+    <h2>Repas</h2>
+
+    <table class="records_list table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Hôte</th>
+            <th>Entrée</th>
+            <th>Plat</th>
+            <th>Dessert</th>
+            <th>Nombre de convives</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{% if entity.time %}{{ entity.time|date('l d F H:i') }}{% endif %}</td>
+                <td>{{ entity.host }}</td>
+                <td>{{ entity.starter }}</td>
+                <td>{{ entity.maincourse }}</td>
+                <td>{{ entity.dessert }}</td>
+                <td>{{ entity.numberOfGuests }}</td>
+                <td>
+                    <a href="{{ path('meal_show', { 'id': entity.id }) }}" class="btn btn-link">Voir</a>
+                    {% if is_granted('ROLE_GUEST') %}
+                        {% if (entity.isBookedBy(guest)) %}
+                            {% render(controller('MamidiClassifiedBundle:Reservation:cancel_form', { 'id' : entity.id })) %}
+                        {% else %}
+                            {% render(controller('MamidiClassifiedBundle:Meal:book_form', { 'id' : entity.id })) %}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

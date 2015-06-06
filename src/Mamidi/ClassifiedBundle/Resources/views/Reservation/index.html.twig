@@ -28,7 +28,7 @@
                 <td>{{ entity.numberOfGuests }}</td>
                 <td>{{ reservation.displayStatus }}</td>
                 <td>
-                    <a href="{{ path('meal_show', { 'id': entity.id }) }}">voir</a>
+                    <a href="{{ path('meal_show', { 'id': entity.id }) }}" class="btn btn-link">Voir</a>
                     {% if is_granted('ROLE_GUEST') %}
                         {% if (entity.isBookedBy(guest)) %}
                             {% render(controller('MamidiClassifiedBundle:Reservation:cancel_form', { 'id' : entity.id })) %}

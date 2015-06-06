@@ -20,12 +20,9 @@ class Builder extends ContainerAware
 
         $menu = $factory->createItem('root');
 
-        $menu->addChild('Accueil', array('route' => 'homepage'));
-
+        /* findMostRecent and Blog are just imaginary examples
         // access services from the container!
         $em = $this->container->get('doctrine')->getManager();
-
-        /* findMostRecent and Blog are just imaginary examples
         $blog = $em->getRepository('AppBundle:Blog')->findMostRecent();
 
         $menu->addChild('Latest Blog Post', array(
@@ -51,6 +48,8 @@ class Builder extends ContainerAware
             $menu->addChild('Mes réservations', array(
                 'route' => 'guest_reservations'
             ));
+        } else {
+            $menu->addChild('Accueil', array('route' => 'homepage'));
         }
 
         return $menu;

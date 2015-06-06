@@ -14,6 +14,11 @@ reject:
     path:     /reject
     defaults: { _controller: MamidiClassifiedBundle:Reservation:reject }
 
+homepage:
+    path: /
+    defaults: { _controller: AppBundle:Default:index }
+    requirements:
+        _method: GET
 meal:
     path: /meal/
     defaults: { _controller: MamidiClassifiedBundle:Meal:index }

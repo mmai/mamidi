@@ -1,14 +1,15 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Menu</h1>
+    <h2>Repas chez {{ entity.host }} le  {{ entity.time|localizeddate('full', 'short') }}</h2>
 
-    <table class="record_properties table">
-        <tbody>
-            <tr>
-                <th>Date</th>
-                <td>{{ entity.time|date('l d F H:i') }}</td>
-            </tr>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Menu</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Entrée</th>
                 <td>{{ entity.starter }}</td>
@@ -21,13 +22,14 @@
                 <th>Dessert</th>
                 <td>{{ entity.dessert }}</td>
             </tr>
-            <tr>
-                <th>Nombre de convives</th>
-                <td>{{ entity.numberOfGuests }}</td>
-            </tr>
-        </tbody>
-    </table>
-
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div>
+<strong>{{ entity.numberOfGuests - entity.getAvailableSeats }} convives inscrits</strong><br>
+<strong>{{ entity.getAvailableSeats }} places disponibles</strong>
+</div>
 
     {% if is_granted('ROLE_GUEST') %}
         {% if (entity.isBookedBy(app.user)) %}
@@ -42,6 +44,6 @@
         {{ form(delete_form) }}
     {% endif %}
 
-    <a href="{{ path('meal') }}">Retour</a>
+    <a href="{{ path('meal') }}" class="btn btn-link">Retour</a>
 
 {% endblock %}

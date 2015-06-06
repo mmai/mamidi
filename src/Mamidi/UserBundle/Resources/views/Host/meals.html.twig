@@ -1,7 +1,10 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Repas de {{ host.username }}</h1>
+    <h2>Repas de {{ host.username }}</h2>
+    {% if (entities is empty) %}
+        Aucun repas
+    {% else %}
     <table class="records_list table">
         <thead>
         <tr>
@@ -31,7 +34,7 @@
         {% endfor %}
         </tbody>
     </table>
-
+{% endif %}
 {% if isCurrentHost %}
     <a href="{{ path('meal_new') }}" class="btn btn-primary">
         Ajouter un repas

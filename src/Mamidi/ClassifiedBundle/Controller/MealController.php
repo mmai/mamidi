@@ -59,7 +59,14 @@ class MealController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('meal_show', array('id' => $entity->getId())));
+            $session = new Session();
+            $session->getFlashBag()->add(
+                'success',
+                'Le repas a été créé'
+            );
+
+//            return $this->redirect($this->getRequest()->headers->get('referer'));
+            return $this->redirect($this->generateUrl('host_meals', array('host' => $current_user)));
         }
 
         return array(
@@ -173,7 +180,7 @@ class MealController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+//        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -229,9 +236,16 @@ class MealController extends Controller
 
             $em->remove($entity);
             $em->flush();
+
+            $session = new Session();
+            $session->getFlashBag()->add(
+                'success',
+                'Le repas a été supprimé'
+            );
         }
 
-        return $this->redirect($this->generateUrl('meal'));
+        $current_user = $this->container->get('security.context')->getToken()->getUser();
+        return $this->redirect($this->generateUrl('host_meals', array('host' => $current_user)));
     }
 
     /**
@@ -246,7 +260,6 @@ class MealController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('meal_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }
