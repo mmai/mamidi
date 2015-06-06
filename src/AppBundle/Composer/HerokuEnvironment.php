@@ -26,6 +26,7 @@ class HerokuEnvironment
             putenv("SYMFONY__DATABASE_HOST={$url['host']}");
             putenv("SYMFONY__DATABASE_USER={$url['user']}");
             putenv("SYMFONY__DATABASE_PASSWORD={$url['pass']}");
+            putenv("SYMFONY__DATABASE_PORT={$url['port']}");
 
             $db = substr($url['path'], 1);
             putenv("SYMFONY__DATABASE_NAME={$db}");

@@ -12,6 +12,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        $conn = $this->getDoctrine()->getConnection();
+        error_log(print_r($conn->getParams(), true));
         return $this->render('default/index.html.twig');
     }
 
