@@ -6,3 +6,4 @@ Déploiement: `git push heroku master`
 Ouverture navigateur: `heroku open`
 Voir les logs: `heroku logs --tail`
 
+config bdd : http://stfalcon.com/en/blog/post/deploying-symfony2-applications-on-heroku-cloud

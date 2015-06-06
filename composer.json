@@ -41,7 +41,9 @@
         "jquery/jquery":  "1.11.*",
         "knplabs/knp-menu-bundle": "~2",
         "sonata-project/admin-bundle": "^2.3",
-        "sonata-project/doctrine-orm-admin-bundle": "^2.3"
+        "sonata-project/doctrine-orm-admin-bundle": "^2.3",
+        "ext-pdo": "*",
+        "ext-pdo_pgsql": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
@@ -49,6 +51,9 @@
     "scripts": {
         "post-root-package-install": [
             "SymfonyStandard\\Composer::hookRootPackageInstall"
+        ],
+        "pre-install-cmd": [
+            "AppBundle\\Composer\\HerokuEnvironment::populateEnvironment"
         ],
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -78,6 +83,15 @@
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
+        },
+        "heroku": {
+            "framework": "symfony2",
+            "document-root": "web",
+            "php-config": [
+                "date.timezone=Europe/Paris",
+                "display_errors=off",
+                "short_open_tag=off"
+            ]
         }
     }
 }

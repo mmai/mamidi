@@ -1,3 +1,4 @@
+heroku config bdd : http://stfalcon.com/en/blog/post/deploying-symfony2-applications-on-heroku-cloud
 - homepage host
   - actions : ajout repas
   - infos : réservations en attente de validation
