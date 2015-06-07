@@ -7,10 +7,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    {% if meal.time %}{{ meal.time|date('l d F H:i') }}{% endif %}<br>
-                    {{ meal.starter }} / {{ meal.maincourse }} / {{ meal.dessert }}
+                    <strong>{% if meal.time %}{{ meal.time|localizeddate('full', 'short')|capitalize }}{% endif %}</strong>
                 </h3>
-                <div>{{ meal.getAvailableSeats }} places disponibles sur {{ meal.numberOfGuests }}</div>
+                <p>{{ meal.starter }} / {{ meal.maincourse }} / {{ meal.dessert }}</p>
+                {{ meal.getAvailableSeats }} places disponibles sur {{ meal.numberOfGuests }}
             </div>
             <div class="panel-body">
                 {% set reservations = meal.getReservations() %}
@@ -29,7 +29,7 @@
                         <tbody>
                         {% for reservation in reservations %}
                             <tr>
-                                <td>{{ reservation.date|date('l d F H:i') }}</td>
+                                <td>{{ reservation.date|localizeddate('medium', 'short') }}</td>
                                 <td>{{ reservation.guest }}</td>
                                 <td>{{ reservation.displayStatus }}</td>
                                 <td>

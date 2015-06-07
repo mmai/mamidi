@@ -22,7 +22,14 @@ class DefaultController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('MamidiClassifiedBundle:Meal')->findAll();
+        $query = $em->createQuery(
+            'SELECT m
+            FROM MamidiClassifiedBundle:Meal m
+            WHERE m.time > :curtime
+            ORDER BY m.time ASC'
+        )->setParameter("curtime", new \DateTime());
+        $entities =  $query->getResult();
+
         return $this->render('default/index.html.twig', array('entities' => $entities));
     }
 

@@ -1,7 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body -%}
-    <h2>Repas</h2>
+
+    <p align="center">
+        <a class="btn btn-default" href="{{ path('guest_registration') }}">{{ 'registration.guest'|trans({}, 'MamidiUserBundle') }}</a>
+        <a class="btn btn-default"  href="{{ path('host_registration') }}">{{ 'registration.host'|trans({}, 'MamidiUserBundle') }}</a>
+    </p>
+
+{% if (entities is empty) %}
+<p align="center">Il n'y a pas de repas programmé prochainement</p>
+{% else %}
+    <h2>Prochains repas</h2>
 
     <table class="records_list table">
         <thead>
@@ -18,7 +27,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td>{% if entity.time %}{{ entity.time|date('l d F H:i') }}{% endif %}</td>
+                <td>{% if entity.time %}{{ entity.time|localizeddate('medium', 'short') }}{% endif %}</td>
                 <td>{{ entity.host }}</td>
                 <td>{{ entity.starter }}</td>
                 <td>{{ entity.maincourse }}</td>
@@ -38,5 +47,5 @@
         {% endfor %}
         </tbody>
     </table>
-
+{% endif %}
 {% endblock %}

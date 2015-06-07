@@ -18,14 +18,17 @@ class MealType extends AbstractType
             ->add('time', 'sonata_type_datetime_picker', array(
                 'label' => "Date",
                 'dp_side_by_side'       => true,
-                'dp_use_current'        => false,
+                'dp_use_current'        => true,
                 'dp_use_seconds'        => false,
+                'dp_language'           => 'fr',
                 'format' => "YYYY-MM-DD H:m"
             ))
             ->add('starter', 'text', array('label' => 'Entrée'))
             ->add('maincourse', 'text', array('label' => 'Plat'))
             ->add('dessert', 'text', array('label' => 'Dessert'))
-            ->add('numberOfGuests', 'integer', array('label' => "Nombre de convives"))
+            ->add('numberOfGuests', 'choice', array(
+                'choices' => array(1 =>1, 2 =>2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9, 10 => 10),
+                'label' => "Nombre de convives"))
         ;
     }
     

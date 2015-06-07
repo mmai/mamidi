@@ -39,6 +39,7 @@ class Meal
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->time = new \DateTime();
     }
 
     /**

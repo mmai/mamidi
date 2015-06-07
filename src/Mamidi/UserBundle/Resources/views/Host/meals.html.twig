@@ -19,7 +19,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td>{% if entity.time %}{{ entity.time|date('l d F H:i') }}{% endif %}</td>
+                <td>{% if entity.time %}{{ entity.time|localizeddate('medium', 'short') }}{% endif %}</td>
                 <td>{{ entity.starter }}</td>
                 <td>{{ entity.maincourse }}</td>
                 <td>{{ entity.dessert }}</td>
