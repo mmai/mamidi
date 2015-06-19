@@ -1,5 +1,7 @@
 # Form field labels
 form:
+    firstname: "Prénom"
+    lastname: "Nom"
     phone: "Téléphone"
     address: "Adresse"
     zip: "Code postal"

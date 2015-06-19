@@ -16,11 +16,13 @@ class GuestRegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // add your custom field
-        $builder->add('phone', null, array('label' => 'form.phone', 'translation_domain' => 'MamidiUserBundle'))
-            ->add('address', null, array('label' => 'form.address', 'translation_domain' => 'MamidiUserBundle'))
-            ->add('zip', null, array('label' => 'form.zip', 'translation_domain' => 'MamidiUserBundle'))
-            ->add('city', null, array('label' => 'form.city', 'translation_domain' => 'MamidiUserBundle'))
-            ->add('save', 'submit', array('label' => 'form.save', 'translation_domain' => 'MamidiUserBundle'));
+        $builder->add('firstname', null, array('label' => 'form.firstname', 'translation_domain' => 'MamidiUserBundle'))
+                ->add('lastname', null, array('label' => 'form.lastname', 'translation_domain' => 'MamidiUserBundle'))
+                ->add('phone', null, array('label' => 'form.phone', 'translation_domain' => 'MamidiUserBundle'))
+                ->add('address', null, array('label' => 'form.address', 'translation_domain' => 'MamidiUserBundle'))
+                ->add('zip', null, array('label' => 'form.zip', 'translation_domain' => 'MamidiUserBundle'))
+                ->add('city', null, array('label' => 'form.city', 'translation_domain' => 'MamidiUserBundle'))
+                ->add('save', 'submit', array('label' => 'form.save', 'translation_domain' => 'MamidiUserBundle'));
     }
 
     public function getParent()

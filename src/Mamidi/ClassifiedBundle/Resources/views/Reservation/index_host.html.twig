@@ -21,7 +21,7 @@
                         <thead>
                         <tr>
                             <th>Date de réservation</th>
-                            <th>Nom</th>
+                            <th>Convive</th>
                             <th>Statut</th>
                             <th>Action</th>
                         </tr>
@@ -30,7 +30,7 @@
                         {% for reservation in reservations %}
                             <tr>
                                 <td>{{ reservation.date|localizeddate('medium', 'short') }}</td>
-                                <td>{{ reservation.guest }}</td>
+                                <td>{{ reservation.guest.firstname }} {{ reservation.guest.lastname }}</td>
                                 <td>{{ reservation.displayStatus }}</td>
                                 <td>
                                     {% if (reservation.getStatus in ["PENDING", "REJECTED"]) %}
