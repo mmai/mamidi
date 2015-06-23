@@ -2,7 +2,10 @@
 
 {% block body -%}
     <h2>Repas chez {{ entity.host }} le  {{ entity.time|localizeddate('full', 'short') }}</h2>
-
+<h3>Lieu : {{ entity.displayLocationFor(app.user) }}</h3>
+    {% if not entity.isConfirmedFor(app.user) %}
+        <div>Adresse exacte indiquée uniquement sur les réservations confirmées<br><br></div>
+    {% endif %}
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Menu</h3>

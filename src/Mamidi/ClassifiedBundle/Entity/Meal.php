@@ -280,4 +280,42 @@ class Meal
             return $reservation->getGuest() == $guest;
         });
     }
+
+    /**
+     * Check if a meal is booked by a guest and if the reservation has been confirmed by the host
+     *
+     * @param \Mamidi\UserBundle\Entity\GuestUser $guest
+     * @return Boolean
+     */
+    public function isConfirmedFor($guest)
+    {
+        return $this->reservations->exists(function($key, $reservation) use($guest) {
+            return ($reservation->getGuest() == $guest) and ($reservation->getStatus() == "ACCEPTED");
+        });
+    }
+
+    /**
+     * Display the meal location information according to the status of the guest reservation
+     * @param $guest
+     * @return string
+     */
+    public function displayLocationFor($user){
+        $host = $this->getHost();
+        $location = $host->getAddress();
+        //We show an aproximate location if the reservation has not been confirmed
+        if (($user != $host) && (!$this->isConfirmedFor($user)) ){
+            $location = $this->blurAddress($location);
+        }
+        return $location;
+    }
+
+    /**
+     * Blur an address : give an approximate location
+     * @param $address the exact address
+     * @return String a blured address without the number of the place
+     */
+    private function blurAddress($address)
+    {
+        return preg_replace('/^[^\d]*\d+[,\s]*/', '', $address);
+    }
 }

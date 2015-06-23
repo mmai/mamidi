@@ -8,5 +8,9 @@
 - mails d'alerte
 - pages profil
 
+- Service d'expiration des demandes de réservation
+- Service de calcul du prix d'un repas.
+- système de paiement
+
 # Bugs
 - contrainte d'unicité UniqueEntity(fields={"meal", "guest"}) ne fonctionne pas dans class Reservation
