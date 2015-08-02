@@ -77,6 +77,33 @@ class Meal
      */
     private $time;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="formula_maincourse", type="boolean")
+     */
+    private $formulaMainCourse;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="formula_starter_maincourse", type="boolean")
+     */
+    private $formulaStarterMainCourse;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="formula_maincourse_dessert", type="boolean")
+     */
+    private $formulaMainCourseDessert;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="formula_complete", type="boolean")
+     */
+    private $formulaComplete;
 
     /**
      * Get id
@@ -317,5 +344,15 @@ class Meal
     private function blurAddress($address)
     {
         return preg_replace('/^[^\d]*\d+[,\s]*/', '', $address);
+    }
+
+    public function enableFormula()
+    {
+        // TODO: write logic here
+    }
+
+    public function getMenus()
+    {
+        // TODO: write logic here
     }
 }

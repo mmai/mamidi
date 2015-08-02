@@ -1,0 +1,19 @@
+default:
+  suites:
+    domain:
+      contexts: [ DomainContext ]
+      filters:  { tags: '@domain' }
+    ui:
+      contexts: [ UserInterfaceContext ]
+      filters:  { tags: '@ui' }
+    api:
+      contexts: [ ApiContext ]
+      filters:  { tags: '@api' }
+  extensions:
+    Behat\Symfony2Extension: ~
+    Behat\MinkExtension:
+      sessions:
+        default:
+          symfony2: ~
+    RMiller\BehatSpec\BehatExtension:
+      path:  bin/phpspec #default value is bin/phpspec
