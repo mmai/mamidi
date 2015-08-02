@@ -48,7 +48,16 @@
         "ext-mbstring": "*"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "liip/functional-test-bundle": "^1.2",
+        "phpspec/phpspec": "~2.0",
+        "behat/gherkin": "~4.3",
+        "behat/behat": "~3.0",
+        "rmiller/behat-spec": "~0.2",
+        "behat/symfony2-extension": "^2.0",
+        "behat/mink": "^1.6",
+        "behat/mink-extension": "^2.0",
+        "behat/mink-browserkit-driver": "^1.2"
     },
     "scripts": {
         "post-root-package-install": [
