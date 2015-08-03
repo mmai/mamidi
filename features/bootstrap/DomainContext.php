@@ -59,7 +59,7 @@ class DomainContext implements Context, SnippetAcceptingContext
         assert($meals->count() > 0);
         $menus = $meals->first()->getMenus();
 
-        assertEquals($menus, array($formula1, $formula2, $formula3));
+        assertEquals(array($formula1, $formula2, $formula3), $menus);
     }
 
 }

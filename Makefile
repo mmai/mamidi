@@ -6,6 +6,9 @@ start:
 features:
 	./bin/behat
 
-test: features
+specs:
+	./bin/phpspec run
+
+test: specs features 
 
 .PHONY: features

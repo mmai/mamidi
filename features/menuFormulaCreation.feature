@@ -7,5 +7,5 @@ Feature: Menu formula creation
   @domain
   Scenario: Create a meal
     Given I am a Host
-    And I create a Meal with the formulas "meal", "starter_meal", "meal_dessert"
-    Then There should be a Meal with the formulas "meal", "starter_meal", "meal_dessert"
+    And I create a Meal with the formulas "maincourse", "starter_maincourse", "maincourse_dessert"
+    Then There should be a Meal with the formulas "maincourse", "starter_maincourse", "maincourse_dessert"

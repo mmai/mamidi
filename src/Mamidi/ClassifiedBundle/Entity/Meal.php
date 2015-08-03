@@ -346,13 +346,31 @@ class Meal
         return preg_replace('/^[^\d]*\d+[,\s]*/', '', $address);
     }
 
-    public function enableFormula()
+    public function enableFormula($formula)
     {
-        // TODO: write logic here
+        switch($formula) {
+            case "maincourse":
+                $this->formulaMainCourse = true;
+                break;
+            case "starter_maincourse":
+                $this->formulaStarterMainCourse = true;
+                break;
+            case "maincourse_dessert":
+                $this->formulaMainCourseDessert = true;
+                break;
+            case "complete":
+                $this->formulaComplete = true;
+                break;
+        }
     }
 
     public function getMenus()
     {
-        // TODO: write logic here
+        $menus = array();
+        if ($this->formulaComplete) array_push($menus, "complete");
+        if ($this->formulaMainCourse) array_push($menus, "maincourse");
+        if ($this->formulaStarterMainCourse) array_push($menus, "starter_maincourse");
+        if ($this->formulaMainCourseDessert) array_push($menus, "maincourse_dessert");
+        return $menus;
     }
 }

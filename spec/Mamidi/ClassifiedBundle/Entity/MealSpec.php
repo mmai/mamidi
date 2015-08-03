@@ -14,11 +14,13 @@ class MealSpec extends ObjectBehavior
 
     public function it_should_enable_formula()
     {
-        $this->enableFormula();
+        $this->enableFormula("complete");
     }
 
     public function it_should_get_menus()
     {
-        $this->getMenus();
+        $this->enableFormula("starter_maincourse");
+        $this->enableFormula("maincourse");
+        $this->getMenus()->shouldEqual(array("maincourse", "starter_maincourse"));
     }
 }
