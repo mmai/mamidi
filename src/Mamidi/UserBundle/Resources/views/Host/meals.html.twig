@@ -12,6 +12,7 @@
             <th>Entrée</th>
             <th>Plat</th>
             <th>Dessert</th>
+            <th>Formules</th>
             <th>Nombre de convives</th>
             <th>Actions</th>
         </tr>
@@ -23,6 +24,11 @@
                 <td>{{ entity.starter }}</td>
                 <td>{{ entity.maincourse }}</td>
                 <td>{{ entity.dessert }}</td>
+                <td>
+                    {% for formula in entity.getFormulas %}
+                        {{ formula }}<br>
+                    {% endfor %}
+                </td>
                 <td>{{ entity.numberOfGuests }}</td>
                 <td>
                     <a href="{{ path('meal_show', { 'id': entity.id }) }}">voir</a>

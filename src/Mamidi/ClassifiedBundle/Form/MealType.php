@@ -26,6 +26,10 @@ class MealType extends AbstractType
             ->add('starter', 'text', array('label' => 'Entrée'))
             ->add('maincourse', 'text', array('label' => 'Plat'))
             ->add('dessert', 'text', array('label' => 'Dessert'))
+            ->add('formula_starter_maincourse', 'checkbox', array('label' => 'Entrée + plat', 'required' => false))
+            ->add('formula_maincourse', 'checkbox', array('label' => 'Plat', 'required' => false))
+            ->add('formula_maincourse_dessert', 'checkbox', array('label' => 'Plat + dessert', 'required' => false))
+            ->add('formula_complete', 'checkbox', array('label' => 'Entrée + plat + dessert', 'required' => false))
             ->add('numberOfGuests', 'choice', array(
                 'choices' => array(1 =>1, 2 =>2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9, 10 => 10),
                 'label' => "Nombre de convives"))

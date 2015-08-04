@@ -3,7 +3,23 @@
 {% block body -%}
     <h2>Nouveau repas</h2>
 
-    {{ form(form) }}
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.time) }}
+    {{ form_row(form.numberOfGuests) }}
+    <fieldset>
+        <legend>Formules disponibles</legend>
+        {{ form_row(form.formula_complete) }}
+        {{ form_row(form.formula_maincourse) }}
+        {{ form_row(form.formula_starter_maincourse) }}
+        {{ form_row(form.formula_maincourse_dessert) }}
+    </fieldset>
+    {{ form_row(form.starter) }}
+    {{ form_row(form.maincourse) }}
+    {{ form_row(form.dessert) }}
+    {{ form_rest(form) }}
+{{ form_end(form) }}
 
         <a href="{{ path('meal') }}">
             Retour à la liste

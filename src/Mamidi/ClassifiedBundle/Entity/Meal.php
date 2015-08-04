@@ -82,28 +82,28 @@ class Meal
      *
      * @ORM\Column(name="formula_maincourse", type="boolean")
      */
-    private $formulaMainCourse;
+    private $formulaMainCourse = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="formula_starter_maincourse", type="boolean")
      */
-    private $formulaStarterMainCourse;
+    private $formulaStarterMainCourse = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="formula_maincourse_dessert", type="boolean")
      */
-    private $formulaMainCourseDessert;
+    private $formulaMainCourseDessert = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="formula_complete", type="boolean")
      */
-    private $formulaComplete;
+    private $formulaComplete = true;
 
     /**
      * Get id
@@ -350,27 +350,138 @@ class Meal
     {
         switch($formula) {
             case "maincourse":
-                $this->formulaMainCourse = true;
+                $this->setFormulaMainCourse(true);
                 break;
             case "starter_maincourse":
-                $this->formulaStarterMainCourse = true;
+                $this->setFormulaStarterMainCourse(true);
                 break;
             case "maincourse_dessert":
-                $this->formulaMainCourseDessert = true;
+                $this->setFormulaMainCourseDessert(true);
                 break;
             case "complete":
-                $this->formulaComplete = true;
+                $this->setFormulaComplete(true);
                 break;
         }
     }
 
-    public function getMenus()
+
+    public function disableFormula($formula)
     {
-        $menus = array();
-        if ($this->formulaComplete) array_push($menus, "complete");
-        if ($this->formulaMainCourse) array_push($menus, "maincourse");
-        if ($this->formulaStarterMainCourse) array_push($menus, "starter_maincourse");
-        if ($this->formulaMainCourseDessert) array_push($menus, "maincourse_dessert");
-        return $menus;
+        switch($formula) {
+            case "maincourse":
+                $this->setFormulaMainCourse(false);
+                break;
+            case "starter_maincourse":
+                $this->setFormulaStarterMainCourse(false);
+                break;
+            case "maincourse_dessert":
+                $this->setFormulaMainCourseDessert(false);
+                break;
+            case "complete":
+                $this->setFormulaComplete(false);
+                break;
+        }
+    }
+
+    public function getFormulas()
+    {
+        $formulas = array();
+        if ($this->formulaComplete) array_push($formulas, "complete");
+        if ($this->formulaMainCourse) array_push($formulas, "maincourse");
+        if ($this->formulaStarterMainCourse) array_push($formulas, "starter_maincourse");
+        if ($this->formulaMainCourseDessert) array_push($formulas, "maincourse_dessert");
+        return $formulas;
+    }
+
+    /**
+     * Set formulaMainCourse
+     *
+     * @param boolean $formulaMainCourse
+     * @return Meal
+     */
+    public function setFormulaMainCourse($formulaMainCourse)
+    {
+        $this->formulaMainCourse = $formulaMainCourse;
+
+        return $this;
+    }
+
+    /**
+     * Get formulaMainCourse
+     *
+     * @return boolean 
+     */
+    public function getFormulaMainCourse()
+    {
+        return $this->formulaMainCourse;
+    }
+
+    /**
+     * Set formulaStarterMainCourse
+     *
+     * @param boolean $formulaStarterMainCourse
+     * @return Meal
+     */
+    public function setFormulaStarterMainCourse($formulaStarterMainCourse)
+    {
+        $this->formulaStarterMainCourse = $formulaStarterMainCourse;
+
+        return $this;
+    }
+
+    /**
+     * Get formulaStarterMainCourse
+     *
+     * @return boolean 
+     */
+    public function getFormulaStarterMainCourse()
+    {
+        return $this->formulaStarterMainCourse;
+    }
+
+    /**
+     * Set formulaMainCourseDessert
+     *
+     * @param boolean $formulaMainCourseDessert
+     * @return Meal
+     */
+    public function setFormulaMainCourseDessert($formulaMainCourseDessert)
+    {
+        $this->formulaMainCourseDessert = $formulaMainCourseDessert;
+
+        return $this;
+    }
+
+    /**
+     * Get formulaMainCourseDessert
+     *
+     * @return boolean 
+     */
+    public function getFormulaMainCourseDessert()
+    {
+        return $this->formulaMainCourseDessert;
+    }
+
+    /**
+     * Set formulaComplete
+     *
+     * @param boolean $formulaComplete
+     * @return Meal
+     */
+    public function setFormulaComplete($formulaComplete)
+    {
+        $this->formulaComplete = $formulaComplete;
+
+        return $this;
+    }
+
+    /**
+     * Get formulaComplete
+     *
+     * @return boolean 
+     */
+    public function getFormulaComplete()
+    {
+        return $this->formulaComplete;
     }
 }

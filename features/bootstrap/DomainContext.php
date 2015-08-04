@@ -44,6 +44,9 @@ class DomainContext implements Context, SnippetAcceptingContext
     public function iCreateAMealWithTheFormulas($formula1, $formula2, $formula3)
     {
         $meal = new Meal();
+        foreach (array("maincourse", "starter_maincourse", "maincourse_dessert", "complete") as $formula){
+            $meal->disableFormula($formula);
+        }
         $meal->enableFormula($formula1);
         $meal->enableFormula($formula2);
         $meal->enableFormula($formula3);
@@ -57,7 +60,7 @@ class DomainContext implements Context, SnippetAcceptingContext
     {
         $meals = $this->host->getMeals();
         assert($meals->count() > 0);
-        $menus = $meals->first()->getMenus();
+        $menus = $meals->first()->getFormulas();
 
         assertEquals(array($formula1, $formula2, $formula3), $menus);
     }
