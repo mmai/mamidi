@@ -13,6 +13,8 @@ use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Behat\Symfony2Extension\Context\KernelDictionary;
 
+use Mamidi\ClassifiedBundle\Twig\ClassifiedExtension;
+
 /**
  * Defines application features from the specific context.
  */
@@ -110,7 +112,7 @@ class UserInterfaceContext extends MinkContext implements KernelAwareContext
         $values = $result->findAll("css", "td");
         assert($values[1]->getText() == "tomates");
         foreach (array($formula1, $formula2, $formula3) as $formula){
-            assert(strpos($values[4]->getText(), $formula) !== false);
+            assert(strpos($values[4]->getText(), (new ClassifiedExtension())->displayFormulaFilter($formula)) !== false);
         }
     }
 

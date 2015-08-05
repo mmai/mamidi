@@ -1,4 +1,9 @@
 services:
+  mamidi.twig.classified_extension:
+        class: Mamidi\ClassifiedBundle\Twig\ClassifiedExtension
+        tags:
+            - { name: twig.extension }
+
 #    mamidi_classified.example:
 #        class: Mamidi\ClassifiedBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

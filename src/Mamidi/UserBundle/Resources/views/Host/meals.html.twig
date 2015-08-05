@@ -26,7 +26,7 @@
                 <td>{{ entity.dessert }}</td>
                 <td>
                     {% for formula in entity.getFormulas %}
-                        {{ formula }}<br>
+                        {{ formula | displayFormula }}<br>
                     {% endfor %}
                 </td>
                 <td>{{ entity.numberOfGuests }}</td>
