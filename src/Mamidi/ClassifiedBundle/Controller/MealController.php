@@ -89,7 +89,7 @@ class MealController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Créer'));
 
         return $form;
     }
@@ -126,15 +126,21 @@ class MealController extends Controller
         }
 
         $isCurrentHost = false;
+        $formula = false;
         $current_user = $this->container->get('security.context')->getToken()->getUser();
         if ($current_user != "anon."){
             $isCurrentHost =  ($current_user->getId() == $entity->getHost()->getId());
+            $reservation = $entity->getReservationBy($current_user);
+            if ($reservation !== false) {
+                $formula = $reservation->getFormula();
+            }
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
+            'formula'     => $formula,
             'is_current_host' => $isCurrentHost,
             'delete_form' => $deleteForm->createView(),
         );
@@ -267,7 +273,7 @@ class MealController extends Controller
     /**
      * Create a Reservation for this meal
      *
-     * @Route("/meal/{id}/book", name="meal_book")
+     * @Route("/meal/{id}/book/", name="meal_book")
      * @Method("POST")
      * @Security("has_role('ROLE_GUEST')")
      *
@@ -282,6 +288,7 @@ class MealController extends Controller
             $reservation = new Reservation();
             $reservation->setGuest($this->getUser());
             $reservation->setMeal($meal);
+            $reservation->setFormula($form->get('formula')->getData());
             $reservation->setDate(new \DateTime("now"));
             $em->persist($reservation);
             $em->flush();
@@ -316,9 +323,17 @@ class MealController extends Controller
      */
     private function createBookForm(Meal $meal)
     {
+        $available_formulas = array();
+        foreach ($meal->getFormulas() as $formula) {
+            $available_formulas[$formula] = Meal::$formulas[$formula];
+        }
+
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('meal_book', array('id' => $meal->getId())))
             ->setMethod('POST')
+            ->add('formula', 'choice', array(
+                'choices' => $available_formulas,
+                'label' => "Formule"))
             ->getForm()
         ;
     }

@@ -56,6 +56,10 @@ class Reservation
      */
     private $status = "PENDING";
 
+    /**
+    * @ORM\Column(name="formula", type="text")
+    */
+    private $formula = "complete";
 
     /**
      * Get id
@@ -111,6 +115,29 @@ class Reservation
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set formula
+     *
+     * @param text $formula
+     * @return Reservation
+     */
+    public function setFormula($formula)
+    {
+        $this->formula = $formula;
+
+        return $this;
+    }
+
+    /**
+     * Get formula
+     *
+     * @return string
+     */
+    public function getFormula()
+    {
+        return $this->formula;
     }
 
     public function displayStatus(){

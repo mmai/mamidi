@@ -107,7 +107,9 @@ class UserInterfaceContext extends MinkContext implements KernelAwareContext
     public function thereShouldBeAMealWithTheFormulas($formula1, $formula2, $formula3)
     {
         $this->visit("/{$this->username}/meals");
-        $results = $this->getSession()->getPage()->findAll("css", ".table.records_list.table tr");
+//        $page = $this->getSession()->getPage();
+//        echo($page->getHtml());
+        $results = $this->getSession()->getPage()->findAll("css", ".records_list tr");
         $result = $results[1];
         $values = $result->findAll("css", "td");
         assert($values[1]->getText() == "tomates");

@@ -22,6 +22,7 @@
                         <tr>
                             <th>Date de réservation</th>
                             <th>Convive</th>
+                            <th>Formule</th>
                             <th>Statut</th>
                             <th>Action</th>
                         </tr>
@@ -31,6 +32,7 @@
                             <tr>
                                 <td>{{ reservation.date|localizeddate('medium', 'short') }}</td>
                                 <td>{{ reservation.guest.firstname }} {{ reservation.guest.lastname }}</td>
+                                <td>{{ reservation.formula | displayFormula}}</td>
                                 <td>{{ reservation.displayStatus }}</td>
                                 <td>
                                     {% if (reservation.getStatus in ["PENDING", "REJECTED"]) %}

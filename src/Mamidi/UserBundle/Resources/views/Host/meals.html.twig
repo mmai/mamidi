@@ -13,7 +13,7 @@
             <th>Plat</th>
             <th>Dessert</th>
             <th>Formules</th>
-            <th>Nombre de convives</th>
+            <th>Nombre de convives / places disponibles</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -25,11 +25,13 @@
                 <td>{{ entity.maincourse }}</td>
                 <td>{{ entity.dessert }}</td>
                 <td>
-                    {% for formula in entity.getFormulas %}
-                        {{ formula | displayFormula }}<br>
-                    {% endfor %}
+                    <ul class="mamidi_formulas">
+                        {% for formula in entity.getFormulas %}
+                            <li>{{ formula | displayFormula }}</li>
+                        {% endfor %}
+                    </ul>
                 </td>
-                <td>{{ entity.numberOfGuests }}</td>
+                <td>{{ entity.numberOfGuests - entity.getAvailableSeats }} / {{ entity.getAvailableSeats }}</td>
                 <td>
                     <a href="{{ path('meal_show', { 'id': entity.id }) }}">voir</a>
                     {% if isCurrentHost %}

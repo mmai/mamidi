@@ -1,6 +1,9 @@
-<div style="display:inline-block;">
-    {{ form_start(book_form) }}
-    {{ form_widget(book_form) }}
-    <input type="submit" class="btn btn-link" value="Réserver">
+{{ form_start(book_form) }}
+<div class="modal-body">
+   {{ form_widget(book_form) }}
+</div>
+<div class="modal-footer">
+   <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+   <button type="submit" class="btn btn-primary">Réserver</button>
+</div>
 {{ form_end(book_form) }}
-    </div>

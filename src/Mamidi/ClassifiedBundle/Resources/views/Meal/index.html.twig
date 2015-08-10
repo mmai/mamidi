@@ -13,7 +13,7 @@
                 <th>Plat</th>
                 <th>Dessert</th>
                 <th>Formules</th>
-                <th>Nombre de convives</th>
+                <th>Nombre de convives / places disponibles</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -26,15 +26,33 @@
                 <td>{{ entity.starter }}</td>
                 <td>{{ entity.maincourse }}</td>
                 <td>{{ entity.dessert }}</td>
-                <td>{{ entity.getFormulas }}</td>
-                <td>{{ entity.numberOfGuests }}</td>
+                <td>
+                    <ul class="mamidi_formulas">
+                        {% for formula in entity.getFormulas %}
+                            <li>{{ formula | displayFormula }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ entity.numberOfGuests - entity.getAvailableSeats }} / {{ entity.getAvailableSeats }}</td>
                 <td>
                     <a href="{{ path('meal_show', { 'id': entity.id }) }}" class="btn btn-link">Voir</a>
                 {% if is_granted('ROLE_GUEST') %}
                     {% if (entity.isBookedBy(guest)) %}
                         {% render(controller('MamidiClassifiedBundle:Reservation:cancel_form', { 'id' : entity.id })) %}
+                        ({{ entity | formulaInformation(guest) }})
                     {% else %}
-                        {% render(controller('MamidiClassifiedBundle:Meal:book_form', { 'id' : entity.id })) %}
+                        <a class="btn btn-link" data-toggle="modal" data-target="#book{{ entity.id }}">Réserver</a>
+                        <div id="book{{ entity.id }}" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Réserver</h4>
+                                    </div>
+                                    {% render(controller('MamidiClassifiedBundle:Meal:book_form', { 'id' : entity.id })) %}
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
                     {% endif %}
                 {% endif %}
                 </td>

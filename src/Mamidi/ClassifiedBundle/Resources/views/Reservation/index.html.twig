@@ -12,7 +12,8 @@
             <th>Entrée</th>
             <th>Plat</th>
             <th>Dessert</th>
-            <th>Nombre de convives</th>
+            <th>Nombre de convives / places disponibles</th>
+            <th>Formule</th>
             <th>Statut</th>
             <th>Actions</th>
         </tr>
@@ -27,7 +28,8 @@
                 <td>{{ entity.starter }}</td>
                 <td>{{ entity.maincourse }}</td>
                 <td>{{ entity.dessert }}</td>
-                <td>{{ entity.numberOfGuests }}</td>
+                <td>{{ entity.numberOfGuests - entity.getAvailableSeats }} / {{ entity.getAvailableSeats }}</td>
+                <td>{{ reservation.formula | displayFormula }}</td>
                 <td>{{ reservation.displayStatus }}</td>
                 <td>
                     <a href="{{ path('meal_show', { 'id': entity.id }) }}" class="btn btn-link">Voir</a>

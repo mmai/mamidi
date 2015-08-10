@@ -25,6 +25,16 @@
                 <th>Dessert</th>
                 <td>{{ entity.dessert }}</td>
             </tr>
+            <tr>
+                <th>Formules</th>
+                <td>
+                    <ul class="mamidi_formulas">
+                        {% for formula in entity.getFormulas %}
+                            <li>{{ formula | displayFormula }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -36,6 +46,7 @@
 
     {% if is_granted('ROLE_GUEST') %}
         {% if (entity.isBookedBy(app.user)) %}
+            Formule réservée : {{ formula | displayFormula }} <br>
             {% render(controller('MamidiClassifiedBundle:Reservation:cancel_form', { 'id' : entity.id })) %}
         {% else %}
             {% render(controller('MamidiClassifiedBundle:Meal:book_form', { 'id' : entity.id })) %}

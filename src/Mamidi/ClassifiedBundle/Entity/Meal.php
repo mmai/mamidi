@@ -15,6 +15,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Meal
 {
+    static $formulas = array(
+        "maincourse" => "Plat",
+        "starter_maincourse" => "Entrée + plat",
+        "maincourse_dessert" => "Plat + dessert",
+        "complete" => "Entrée + plat + dessert"
+    );
+
     /**
      * @var integer
      *
@@ -306,6 +313,20 @@ class Meal
         return $this->reservations->exists(function($key, $reservation) use($guest) {
             return $reservation->getGuest() == $guest;
         });
+    }
+
+    /**
+     * Get reservation by a guest
+     *
+     * @param \Mamidi\UserBundle\Entity\GuestUser $guest
+     * @return Reservation or false
+     */
+    public function getReservationBy($guest)
+    {
+        $reservations = $this->reservations->filter(function($reservation) use($guest) {
+            return $reservation->getGuest() == $guest;
+        });
+        return (sizeof($reservations)>0)?$reservations[0]:false;
     }
 
     /**
